@@ -6,163 +6,141 @@
 <title>Be My Valentine 💖</title>
 
 <style>
+* { box-sizing: border-box; }
+
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden;
-  font-family: 'Poppins', sans-serif;
+  font-family: Arial, sans-serif;
 }
 
-/* Background */
+/* Background with fallback */
 body {
-  background: url("elemental_bg.jpg") center/cover no-repeat;
+  background:
+    linear-gradient(135deg, #ff758c, #ff7eb3),
+    url("elemental_bg.jpg") center/cover no-repeat;
 }
 
-/* Dark overlay */
+/* Overlay */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0,0,0,0.45);
 }
 
-/* Card */
+/* Center card */
 .card {
   position: relative;
   z-index: 2;
   width: 90%;
-  max-width: 380px;
+  max-width: 360px;
   margin: auto;
   top: 50%;
   transform: translateY(-50%);
   background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(12px);
-  border-radius: 26px;
-  padding: 24px;
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 22px;
   text-align: center;
   color: white;
 }
 
-/* Title */
+/* Text */
 h1 {
-  font-size: 26px;
-  margin-bottom: 8px;
+  margin-top: 0;
+  font-size: 24px;
 }
 
-/* Names */
 .names {
-  font-size: 16px;
+  font-size: 14px;
+  margin-bottom: 10px;
   opacity: 0.9;
-  margin-bottom: 14px;
 }
 
 /* Wade */
 .wade {
-  font-size: 90px;
+  font-size: 80px;
   position: relative;
-  animation: float 3s ease-in-out infinite;
 }
 
 /* Tears */
 .tear {
   position: absolute;
-  font-size: 20px;
+  font-size: 18px;
   animation: cry 1.2s infinite;
 }
 
-.tear.left { left: 42%; top: 110px; }
-.tear.right { left: 56%; top: 110px; animation-delay: 0.5s; }
+.tear.left { left: 45%; top: 95px; }
+.tear.right { left: 55%; top: 95px; animation-delay: .6s; }
 
 @keyframes cry {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(40px); opacity: 0; }
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(35px); opacity: 0; }
 }
 
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Panda couple */
+/* Pandas */
 .pandas {
-  font-size: 40px;
-  margin: 12px 0;
-  animation: hug 2s infinite;
+  font-size: 36px;
+  margin: 10px 0;
 }
 
-@keyframes hug {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-/* Buttons */
+/* Buttons area */
 .buttons {
   position: relative;
   height: 120px;
   margin-top: 20px;
 }
 
+/* Buttons */
 button {
   padding: 14px 28px;
-  border-radius: 30px;
+  font-size: 16px;
+  border-radius: 28px;
   border: none;
-  font-size: 18px;
   font-weight: bold;
 }
 
+/* YES */
 #yesBtn {
-  background: linear-gradient(45deg,#ff4d6d,#ff8fab);
+  background: #ff4d6d;
   color: white;
+  display: block;
+  margin: 0 auto;
 }
 
+/* NO */
 #noBtn {
   background: #74c0fc;
   color: #003566;
   position: absolute;
   left: 50%;
+  top: 60px;
   transform: translateX(-50%);
 }
 
-/* Love text */
+/* Love screen */
 .love {
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 900;
-  animation: boom 0.8s ease forwards;
+  animation: pop .8s ease forwards;
 }
 
-@keyframes boom {
-  0% { transform: scale(0); opacity: 0; }
-  80% { transform: scale(1.4); }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* Fireworks */
-.firework {
-  position: fixed;
-  width: 6px;
-  height: 6px;
-  background: pink;
-  border-radius: 50%;
-  animation: explode 1s ease-out forwards;
-}
-
-@keyframes explode {
-  to {
-    transform: translate(var(--x), var(--y)) scale(0);
-    opacity: 0;
-  }
+@keyframes pop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 /* Confetti */
 .confetti {
   position: fixed;
   font-size: 22px;
-  animation: fall 3s linear infinite;
+  animation: fall 3s linear forwards;
 }
 
 @keyframes fall {
-  0% { transform: translateY(-10vh); }
-  100% { transform: translateY(110vh); }
+  from { transform: translateY(-10vh); }
+  to { transform: translateY(110vh); }
 }
 </style>
 </head>
@@ -183,60 +161,4 @@ button {
 
   <div class="buttons">
     <button id="yesBtn">YES 💖</button>
-    <button id="noBtn">NO 😜</button>
-  </div>
-</div>
-
-<audio id="music" src="steal_the_show.mp3" loop></audio>
-
-<script>
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const card = document.getElementById("card");
-const music = document.getElementById("music");
-
-/* Escape NO */
-function moveNo() {
-  const x = Math.random() * 240 - 120;
-  const y = Math.random() * 80;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
-}
-noBtn.addEventListener("mouseenter", moveNo);
-noBtn.addEventListener("touchstart", moveNo);
-
-/* Fireworks */
-function firework() {
-  const fw = document.createElement("div");
-  fw.className = "firework";
-  fw.style.left = Math.random() * 100 + "vw";
-  fw.style.top = Math.random() * 100 + "vh";
-  fw.style.setProperty("--x", (Math.random()*200-100)+"px");
-  fw.style.setProperty("--y", (Math.random()*200-100)+"px");
-  document.body.appendChild(fw);
-  setTimeout(() => fw.remove(), 1000);
-}
-
-/* Confetti */
-function confetti() {
-  const c = document.createElement("div");
-  c.className = "confetti";
-  c.innerHTML = "🎊";
-  c.style.left = Math.random()*100+"vw";
-  document.body.appendChild(c);
-  setTimeout(() => c.remove(), 3000);
-}
-
-/* YES click */
-yesBtn.addEventListener("click", () => {
-  music.play();
-  card.innerHTML = `
-    <div class="love">💥 LOVE YOU SURAMMAAA 💥</div>
-    <div style="font-size:70px;">🔥💧💖</div>
-  `;
-  setInterval(firework, 200);
-  setInterval(confetti, 150);
-});
-</script>
-
-</body>
-</html>
+    <button i
