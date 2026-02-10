@@ -8,128 +8,103 @@
 <style>
 * { box-sizing: border-box; }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: Arial, sans-serif;
-}
-
-/* Background */
 body {
+  margin: 0;
+  height: 100vh;
+  font-family: Arial, sans-serif;
   background:
-    linear-gradient(135deg, #ff758c, #ff7eb3),
-    url("elemental_bg.jpg") center no-repeat;
-  background-size: contain;
+    url("elemental_bg.jpg") center center / contain no-repeat,
+    linear-gradient(135deg, #ff758c, #ff7eb3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
 }
 
-/* Dark overlay */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.35);
-}
-
-/* Card */
 .card {
-  position: relative;
-  z-index: 2;
   width: 90%;
   max-width: 340px;
-  margin: auto;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.25);
   backdrop-filter: blur(12px);
-  border-radius: 22px;
-  padding: 18px;
+  border-radius: 24px;
+  padding: 22px;
   text-align: center;
   color: white;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
 h1 {
   font-size: 22px;
-  margin: 6px 0;
-}
-
-.names {
-  font-size: 13px;
-  opacity: 0.9;
   margin-bottom: 6px;
 }
 
-/* Wade */
-.wade {
-  font-size: 72px;
-  position: relative;
-  margin: 6px 0;
+.sub {
+  font-size: 13px;
+  opacity: 0.9;
 }
 
-/* Tears */
+.wade {
+  font-size: 70px;
+  position: relative;
+  margin: 10px 0;
+}
+
 .tear {
   position: absolute;
   font-size: 16px;
   animation: cry 1.2s infinite;
 }
-.tear.left { left: 46%; top: 78px; }
-.tear.right { left: 54%; top: 78px; animation-delay: .6s; }
+.tear.left { left: 48%; top: 75px; }
+.tear.right { left: 56%; top: 75px; animation-delay: .6s; }
 
 @keyframes cry {
   from { transform: translateY(0); opacity: 1; }
   to { transform: translateY(30px); opacity: 0; }
 }
 
-/* Pandas */
 .pandas {
   font-size: 32px;
-  margin: 6px 0;
+  margin: 6px 0 14px;
 }
 
-/* Buttons container */
 .buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  height: 52px;
   position: relative;
-  height: 150px;
-  margin-top: 12px;
 }
 
-/* Buttons */
 button {
-  padding: 10px 18px;
-  font-size: 14px;
-  border-radius: 22px;
+  flex: 1;
   border: none;
-  font-weight: bold;
+  border-radius: 22px;
+  padding: 10px 0;
+  font-size: 15px;
+  cursor: pointer;
 }
 
-/* YES */
-#yesBtn {
+#yes {
   background: #ff4d6d;
   color: white;
-  display: block;
-  margin: 0 auto;
 }
 
-/* NO */
-#noBtn {
-  background: #74c0fc;
-  color: #003566;
-  position: absolute;
-  left: 50%;
-  top: 70px;
-  transform: translateX(-50%);
+#no {
+  background: #7abfff;
+  color: #003;
+  position: relative;
 }
 
-/* Love screen */
-.love {
-  font-size: 24px;
-  font-weight: 900;
-  animation: pop .8s ease forwards;
+#love {
+  display: none;
+  margin-top: 14px;
+  font-size: 20px;
+  animation: pop 0.8s infinite alternate;
 }
 
 @keyframes pop {
-  from { transform: scale(0); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+  from { transform: scale(1); }
+  to { transform: scale(1.15); }
 }
 
 /* Confetti */
@@ -137,80 +112,75 @@ button {
   position: fixed;
   font-size: 22px;
   animation: fall 3s linear forwards;
+  top: -10%;
 }
 
 @keyframes fall {
-  from { transform: translateY(-10vh); }
-  to { transform: translateY(110vh); }
+  to {
+    transform: translateY(120vh) rotate(360deg);
+    opacity: 0;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<div class="overlay"></div>
-
-<div class="card" id="card">
-  <h1>Will you be my Valentine? 💘</h1>
-  <div class="names">Amuktha ❤️ Your Person · 14 Feb</div>
-
-  <div class="wade">💧</div>
-  <div class="tear left">💧</div>
-  <div class="tear right">💧</div>
-
-  <div class="pandas">🐼💖🐼</div>
-
-  <div class="buttons">
-    <button id="yesBtn">YES 💖</button>
-    <button id="noBtn">NO 😜</button>
-  </div>
-</div>
-
 <audio id="music" src="steal_the_show.mp3"></audio>
 
+<div class="card">
+  <h1>Will you be my Valentine? 💖</h1>
+  <div class="sub">Amuktha ❤️ Your Person · 14 Feb</div>
+
+  <div class="wade">
+    💧
+    <div class="tear left">💧</div>
+    <div class="tear right">💧</div>
+  </div>
+
+  <div class="pandas">🔥💖💧</div>
+
+  <div class="buttons">
+    <button id="yes">YES 💖</button>
+    <button id="no">NO 😜</button>
+  </div>
+
+  <div id="love">💥 LOVE YOU SURAMMAAA 💕</div>
+</div>
+
 <script>
-const noBtn = document.getElementById("noBtn");
-const yesBtn = document.getElementById("yesBtn");
-const card = document.getElementById("card");
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const love = document.getElementById("love");
 const music = document.getElementById("music");
 
-/* Start music at 1:00 after first interaction */
-function startMusicOnce() {
-  music.currentTime = 60;
-  music.play();
-  document.removeEventListener("click", startMusicOnce);
-  document.removeEventListener("touchstart", startMusicOnce);
-}
-document.addEventListener("click", startMusicOnce);
-document.addEventListener("touchstart", startMusicOnce);
-
-/* Move NO safely */
-function moveNo() {
-  const x = Math.random() * 180 - 90;
-  const y = 70 + Math.random() * 40;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
-}
-noBtn.addEventListener("mouseenter", moveNo);
-noBtn.addEventListener("touchstart", moveNo);
+/* NO escapes */
+noBtn.addEventListener("mouseenter", () => {
+  noBtn.style.position = "absolute";
+  noBtn.style.left = Math.random() * 80 + "%";
+  noBtn.style.top = Math.random() * 80 + "%";
+});
 
 /* Confetti */
-function confetti() {
-  const c = document.createElement("div");
-  c.className = "confetti";
-  c.innerText = "🎊";
-  c.style.left = Math.random() * 100 + "vw";
-  document.body.appendChild(c);
-  setTimeout(() => c.remove(), 3000);
+function confettiBlast() {
+  const emojis = ["🔥","💧","💖","✨","🎆","🎉"];
+  for (let i = 0; i < 60; i++) {
+    const span = document.createElement("span");
+    span.className = "confetti";
+    span.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    span.style.left = Math.random() * 100 + "vw";
+    span.style.animationDuration = (2 + Math.random() * 2) + "s";
+    document.body.appendChild(span);
+    setTimeout(() => span.remove(), 3000);
+  }
 }
 
-/* YES */
+/* YES click */
 yesBtn.onclick = () => {
-  card.innerHTML = `
-    <div class="love">💥 LOVE YOU SURAMMAAA 💥</div>
-    <div style="font-size:70px;">🔥💧💖</div>
-    <div style="font-size:14px;margin-top:6px;">Forever & Always · 14 Feb</div>
-  `;
-  setInterval(confetti, 180);
+  love.style.display = "block";
+  confettiBlast();
+  music.currentTime = 60;
+  music.play();
 };
 </script>
 
