@@ -15,88 +15,89 @@ html, body {
   font-family: Arial, sans-serif;
 }
 
-/* Background with fallback */
+/* Background */
 body {
   background:
     linear-gradient(135deg, #ff758c, #ff7eb3),
-    url("elemental_bg.jpg") center/cover no-repeat;
+    url("elemental_bg.jpg") center no-repeat;
+  background-size: contain;
+  overflow: hidden;
 }
 
-/* Overlay */
+/* Dark overlay */
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0,0,0,0.35);
 }
 
-/* Center card */
+/* Card */
 .card {
   position: relative;
   z-index: 2;
   width: 90%;
-  max-width: 360px;
+  max-width: 340px;
   margin: auto;
   top: 50%;
   transform: translateY(-50%);
   background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(10px);
-  border-radius: 24px;
-  padding: 22px;
+  backdrop-filter: blur(12px);
+  border-radius: 22px;
+  padding: 18px;
   text-align: center;
   color: white;
 }
 
-/* Text */
 h1 {
-  margin-top: 0;
-  font-size: 24px;
+  font-size: 22px;
+  margin: 6px 0;
 }
 
 .names {
-  font-size: 14px;
-  margin-bottom: 10px;
+  font-size: 13px;
   opacity: 0.9;
+  margin-bottom: 6px;
 }
 
 /* Wade */
 .wade {
-  font-size: 80px;
+  font-size: 72px;
   position: relative;
+  margin: 6px 0;
 }
 
 /* Tears */
 .tear {
   position: absolute;
-  font-size: 18px;
+  font-size: 16px;
   animation: cry 1.2s infinite;
 }
-
-.tear.left { left: 45%; top: 95px; }
-.tear.right { left: 55%; top: 95px; animation-delay: .6s; }
+.tear.left { left: 46%; top: 78px; }
+.tear.right { left: 54%; top: 78px; animation-delay: .6s; }
 
 @keyframes cry {
   from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(35px); opacity: 0; }
+  to { transform: translateY(30px); opacity: 0; }
 }
 
 /* Pandas */
 .pandas {
-  font-size: 36px;
-  margin: 10px 0;
+  font-size: 32px;
+  margin: 6px 0;
 }
 
-/* Buttons area */
+/* Buttons container */
 .buttons {
   position: relative;
-  height: 120px;
-  margin-top: 20px;
+  height: 150px;
+  margin-top: 12px;
 }
 
 /* Buttons */
 button {
-  padding: 14px 28px;
-  font-size: 16px;
-  border-radius: 28px;
+  padding: 10px 18px;
+  font-size: 14px;
+  border-radius: 22px;
   border: none;
   font-weight: bold;
 }
@@ -115,13 +116,13 @@ button {
   color: #003566;
   position: absolute;
   left: 50%;
-  top: 60px;
+  top: 70px;
   transform: translateX(-50%);
 }
 
 /* Love screen */
 .love {
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 900;
   animation: pop .8s ease forwards;
 }
@@ -161,4 +162,57 @@ button {
 
   <div class="buttons">
     <button id="yesBtn">YES 💖</button>
-    <button i
+    <button id="noBtn">NO 😜</button>
+  </div>
+</div>
+
+<audio id="music" src="steal_the_show.mp3"></audio>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const card = document.getElementById("card");
+const music = document.getElementById("music");
+
+/* Start music at 1:00 after first interaction */
+function startMusicOnce() {
+  music.currentTime = 60;
+  music.play();
+  document.removeEventListener("click", startMusicOnce);
+  document.removeEventListener("touchstart", startMusicOnce);
+}
+document.addEventListener("click", startMusicOnce);
+document.addEventListener("touchstart", startMusicOnce);
+
+/* Move NO safely */
+function moveNo() {
+  const x = Math.random() * 180 - 90;
+  const y = 70 + Math.random() * 40;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+/* Confetti */
+function confetti() {
+  const c = document.createElement("div");
+  c.className = "confetti";
+  c.innerText = "🎊";
+  c.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(c);
+  setTimeout(() => c.remove(), 3000);
+}
+
+/* YES */
+yesBtn.onclick = () => {
+  card.innerHTML = `
+    <div class="love">💥 LOVE YOU SURAMMAAA 💥</div>
+    <div style="font-size:70px;">🔥💧💖</div>
+    <div style="font-size:14px;margin-top:6px;">Forever & Always · 14 Feb</div>
+  `;
+  setInterval(confetti, 180);
+};
+</script>
+
+</body>
+</html>
