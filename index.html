@@ -3,180 +3,239 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Be My Valentine ❤️</title>
+<title>Be My Valentine 💖</title>
 
 <style>
-body {
+html, body {
   margin: 0;
-  height: 100vh;
-  background: radial-gradient(circle at top, #ffb3c6, #ff758f);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Poppins', sans-serif;
+  padding: 0;
+  height: 100%;
   overflow: hidden;
+  font-family: 'Poppins', sans-serif;
 }
 
-/* Floating hearts */
-.heart {
-  position: absolute;
-  color: rgba(255,255,255,0.6);
-  font-size: 20px;
-  animation: float 6s infinite linear;
+/* Background */
+body {
+  background: url("elemental_bg.jpg") center/cover no-repeat;
 }
-@keyframes float {
-  from { transform: translateY(100vh); }
-  to { transform: translateY(-10vh); }
+
+/* Dark overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
 }
 
 /* Card */
 .card {
-  background: white;
-  padding: 25px;
-  border-radius: 25px;
-  text-align: center;
-  width: 320px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
   position: relative;
-  z-index: 10;
-}
-
-h1 {
-  color: #ff4d6d;
-  margin-bottom: 10px;
-}
-
-/* Elemental couple */
-.couple {
-  display: flex;
-  justify-content: space-around;
-  margin: 15px 0;
-}
-
-.fire, .water {
-  font-size: 48px;
-}
-
-.fire {
-  animation: flame 1s infinite alternate;
-}
-@keyframes flame {
-  from { transform: scale(1); }
-  to { transform: scale(1.15); }
-}
-
-.water {
-  animation: drip 1.5s infinite;
-}
-@keyframes drip {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(6px); }
-}
-
-/* Buttons */
-button {
-  padding: 12px 22px;
-  font-size: 16px;
-  border-radius: 25px;
-  border: none;
-  cursor: pointer;
-  margin: 8px;
-}
-
-#yes {
-  background: #ff4d6d;
+  z-index: 2;
+  width: 90%;
+  max-width: 380px;
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 26px;
+  padding: 24px;
+  text-align: center;
   color: white;
 }
 
-#no {
-  background: #ccc;
-  position: absolute;
+/* Title */
+h1 {
+  font-size: 26px;
+  margin-bottom: 8px;
 }
 
-/* Love explosion */
-#love {
-  display: none;
-  font-size: 26px;
-  color: #ff4d6d;
-  margin-top: 15px;
-  animation: explode 0.6s ease-in-out infinite alternate;
+/* Names */
+.names {
+  font-size: 16px;
+  opacity: 0.9;
+  margin-bottom: 14px;
+}
+
+/* Wade */
+.wade {
+  font-size: 90px;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Tears */
+.tear {
+  position: absolute;
+  font-size: 20px;
+  animation: cry 1.2s infinite;
+}
+
+.tear.left { left: 42%; top: 110px; }
+.tear.right { left: 56%; top: 110px; animation-delay: 0.5s; }
+
+@keyframes cry {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(40px); opacity: 0; }
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Panda couple */
+.pandas {
+  font-size: 40px;
+  margin: 12px 0;
+  animation: hug 2s infinite;
+}
+
+@keyframes hug {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Buttons */
+.buttons {
+  position: relative;
+  height: 120px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 14px 28px;
+  border-radius: 30px;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#yesBtn {
+  background: linear-gradient(45deg,#ff4d6d,#ff8fab);
+  color: white;
+}
+
+#noBtn {
+  background: #74c0fc;
+  color: #003566;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Love text */
+.love {
+  font-size: 30px;
+  font-weight: 900;
+  animation: boom 0.8s ease forwards;
+}
+
+@keyframes boom {
+  0% { transform: scale(0); opacity: 0; }
+  80% { transform: scale(1.4); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Fireworks */
+.firework {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: pink;
+  border-radius: 50%;
+  animation: explode 1s ease-out forwards;
 }
 
 @keyframes explode {
-  from { transform: scale(1); }
-  to { transform: scale(1.2); }
+  to {
+    transform: translate(var(--x), var(--y)) scale(0);
+    opacity: 0;
+  }
 }
 
-/* Crying drops */
-.drop {
-  position: absolute;
-  font-size: 20px;
-  animation: fall 1s linear infinite;
+/* Confetti */
+.confetti {
+  position: fixed;
+  font-size: 22px;
+  animation: fall 3s linear infinite;
 }
+
 @keyframes fall {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(40px); opacity: 0; }
+  0% { transform: translateY(-10vh); }
+  100% { transform: translateY(110vh); }
 }
 </style>
 </head>
 
 <body>
 
-<audio id="music" src="steal_the_show.mp3"></audio>
+<div class="overlay"></div>
 
-<div class="card">
-  <h1>Will you be my Valentine? 💖</h1>
+<div class="card" id="card">
+  <h1>Will you be my Valentine? 💘</h1>
+  <div class="names">Amuktha ❤️ Your Person · 14 Feb</div>
 
-  <div class="couple">
-    <div class="fire">🔥</div>
-    <div class="water" id="wade">💧</div>
-  </div>
+  <div class="wade">💧</div>
+  <div class="tear left">💧</div>
+  <div class="tear right">💧</div>
 
-  <button id="yes">YES</button>
-  <button id="no">NO</button>
+  <div class="pandas">🐼💖🐼</div>
 
-  <div id="love">
-    💥 LOVE YOU SURAMMAAA 💕  
-    <br>Wade is crying happy tears 😭💧
+  <div class="buttons">
+    <button id="yesBtn">YES 💖</button>
+    <button id="noBtn">NO 😜</button>
   </div>
 </div>
 
-<script>
-const noBtn = document.getElementById("no");
-const yesBtn = document.getElementById("yes");
-const love = document.getElementById("love");
-const music = document.getElementById("music");
-const wade = document.getElementById("wade");
+<audio id="music" src="steal_the_show.mp3" loop></audio>
 
-// Hearts
-for(let i=0;i<20;i++){
-  let h = document.createElement("div");
-  h.className = "heart";
-  h.innerHTML = "💗";
-  h.style.left = Math.random()*100+"vw";
-  h.style.animationDuration = (4+Math.random()*4)+"s";
-  document.body.appendChild(h);
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const card = document.getElementById("card");
+const music = document.getElementById("music");
+
+/* Escape NO */
+function moveNo() {
+  const x = Math.random() * 240 - 120;
+  const y = Math.random() * 80;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+/* Fireworks */
+function firework() {
+  const fw = document.createElement("div");
+  fw.className = "firework";
+  fw.style.left = Math.random() * 100 + "vw";
+  fw.style.top = Math.random() * 100 + "vh";
+  fw.style.setProperty("--x", (Math.random()*200-100)+"px");
+  fw.style.setProperty("--y", (Math.random()*200-100)+"px");
+  document.body.appendChild(fw);
+  setTimeout(() => fw.remove(), 1000);
 }
 
-// NO escapes + Wade cries
-noBtn.onmouseover = () => {
-  noBtn.style.top = Math.random()*80 + "vh";
-  noBtn.style.left = Math.random()*80 + "vw";
+/* Confetti */
+function confetti() {
+  const c = document.createElement("div");
+  c.className = "confetti";
+  c.innerHTML = "🎊";
+  c.style.left = Math.random()*100+"vw";
+  document.body.appendChild(c);
+  setTimeout(() => c.remove(), 3000);
+}
 
-  let drop = document.createElement("div");
-  drop.className = "drop";
-  drop.innerHTML = "💧";
-  drop.style.left = wade.getBoundingClientRect().left + 20 + "px";
-  drop.style.top = wade.getBoundingClientRect().top + 40 + "px";
-  document.body.appendChild(drop);
-  setTimeout(()=>drop.remove(),1000);
-};
-
-// YES explosion
-yesBtn.onclick = () => {
-  love.style.display = "block";
+/* YES click */
+yesBtn.addEventListener("click", () => {
   music.play();
-};
+  card.innerHTML = `
+    <div class="love">💥 LOVE YOU SURAMMAAA 💥</div>
+    <div style="font-size:70px;">🔥💧💖</div>
+  `;
+  setInterval(firework, 200);
+  setInterval(confetti, 150);
+});
 </script>
 
 </body>
